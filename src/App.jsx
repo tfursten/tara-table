@@ -64,8 +64,8 @@ const App = ({ data }) =>
     <div className="App">
       <Title>{"Tara's Cool Table Thingy"}</Title>
       <List>
-      <ListItem>{`${data.values.map(value => value).join(', ')}`}</ListItem>
-        { buildTree(data) }
+        <ListItem>{`${data.values.map(value => value).join(', ')}`}</ListItem>
+          { buildTree(data) }
       </List>
     </div>
 

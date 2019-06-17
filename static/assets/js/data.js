@@ -1,4 +1,4 @@
-const tree = {
+const data = {
 	"name": "root",
 	"values": [
 		"Taxa ID - Level",
