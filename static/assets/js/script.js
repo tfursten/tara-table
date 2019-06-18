@@ -8,7 +8,8 @@ const { ranks } = data.meta
 
 const buildTree = (data) => {
 
-  const body = data.children.length === 0
+  const isLeaf = data.children.length === 0
+  const body = isLeaf
     ? ''
     : `
       <div class="collapsible-body">
@@ -18,8 +19,9 @@ const buildTree = (data) => {
 
   return `
     <ul class="node collapsible expandable active">
-      <li>
-        <div class="row collapsible-header ${ranks[data.level].color}">
+      <li class="${isLeaf ? 'leaf' : 'node'}">
+        <div class="row collapsible-header ${ranks[data.level].color} ">
+          <span class="arrow">▶</span>
           <div class="col s2">${data.level} - ${data.name}</div>
           ${data.values.map(value => `<div class="col s2">${Number(value).toFixed(0)}</div>`).join('\n')}
         </div>
@@ -40,13 +42,22 @@ const header = `
 
 root.innerHTML = header + data.children.map(buildTree).join('\n')
 
-// Array.from(document.getElementsByClassName('expando')).forEach(li => { 
-//   li.addEventListener('click', () => {
-//     const lists = Array.from(li.parentElement.getElementsByTagName('UL'))
-//     const leaves = Array.from(li.parentElement.getElementsByClassName('leaf'))
-//     lists.concat(leaves).forEach(ul => { ul.classList.toggle('inactive') })
+
+// const headers = Array.from(document.getElementsByClassName('collapsible-header'))
+// headers.forEach(header => {
+//   header.addEventListener('click', () => {
+//     if ([...header.parentElement.classList].includes('active')) {
+//       header.querySelector('.arrow').textContent = '▶'
+//     } else {
+//       header.querySelector('.arrow').textContent = '▼'
+//     }
 //   })
 // })
 
 const collapsibles = document.querySelectorAll('.collapsible.expandable');
-const collapsible_instances = M.Collapsible.init(collapsibles, {accordion: false});
+const collapseOptions = {
+  accordion: false,
+  onOpenStart: li => li.querySelector('.arrow').textContent = "▼",
+  onCloseStart: li => li.querySelector('.arrow').textContent = "▶",
+}
+const collapsible_instances = M.Collapsible.init(collapsibles, collapseOptions);
