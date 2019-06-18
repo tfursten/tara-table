@@ -9,17 +9,6 @@ body, html {
 #page-title {
   text-align: center; }
 
-ul.collection {
-  margin-left: 2px; }
-
-.header-list-item + .collection {
-  margin-left: 0;
-}
-
-.node.inactive, .leaf.inactive {
-  display: none;
-}
-
 .nav-extended .nav-content .tabs .tab a:focus,
 .nav-extended .nav-content .tabs .tab a:focus.active {
   background-color: hsl(207, 89%, 95%);
@@ -36,4 +25,31 @@ ul.collection {
 
 .nav-extended .nav-content .tabs .tab a {
   color: #1565c0 ;
+}
+
+#root {
+  margin-top: 30px;
+}
+
+#root .row {
+  margin-bottom: 0;
+  border: 0;
+}
+
+#root .collapsible {
+  margin: 0;
+  border: 0;
+}
+
+#root .collapsible-body {
+  padding: 0;
+  border: 0;
+}
+
+#root #data-header {
+  line-height: 50px;
+}
+
+.node.inactive, .leaf.inactive {
+  display: none;
 }
