@@ -1,5 +1,8 @@
 const wrapper = document.querySelector('.wrapper')
 
+// Initialize Materialize-CSS Tabs
+const tabs = M.Tabs.init(document.querySelector('.tabs'))
+
 const header_row = data.values.map(value => `<div class="col s2">${value}</div>`).join('\n')
 
 const colors = {
@@ -17,7 +20,7 @@ const buildTree = (data) => {
 
   if (data.children.length === 0) {
     return (
-      `<li class="row collection-item list-item ${colors[data.level]}">
+      `<li class="row collection-item list-item ${colors[data.level]} leaf">
           <div class="col s2">${data.name} - ${data.level}</div>
           ${data.values.map(value => `<div class="col s2">${Number(value).toFixed(0)}</div>`).join('\n')}
         </li>`
@@ -41,7 +44,7 @@ const buildTree = (data) => {
       
 
   return (
-    `<ul class="collection">
+    `<ul class="collection node">
       ${row}
       ${data.children.map(item => buildTree(item)).join('\n')}
     </ul>`
@@ -54,8 +57,8 @@ wrapper.innerHTML = buildTree(data)
 Array.from(document.getElementsByClassName('expando')).forEach(li => { 
   li.addEventListener('click', () => {
     const lists = Array.from(li.parentElement.getElementsByTagName('UL'))
-    
-    lists.forEach(ul => { ul.classList.toggle('active') })
+    const leaves = Array.from(li.parentElement.getElementsByClassName('leaf'))
+    lists.concat(leaves).forEach(ul => { ul.classList.toggle('inactive') })
   })
 })
 

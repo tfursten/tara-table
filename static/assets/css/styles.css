@@ -13,17 +13,25 @@ ul.collection {
   margin-left: 2px; }
 
 .header-list-item + .collection {
-  margin-left: 0; }
+  margin-left: 0;
+}
 
-ul.active {
-  display: none; }
+.node.inactive, .leaf.inactive {
+  display: none;
+}
 
-.nav-extended .nav-content .tabs .tab a.active {
-  background-color: #bbdefb
+.nav-extended .nav-content .tabs .tab a:focus,
+.nav-extended .nav-content .tabs .tab a:focus.active {
+  background-color: hsl(207, 89%, 95%);
 }
 
 .nav-extended .nav-content .tabs .tab a:hover {
   color: #0d47a1;
+}
+
+.nav-extended .nav-content .tabs .indicator {
+  background-color: hsla(207, 89%, 60%, 0.75);
+  height: 6px;
 }
 
 .nav-extended .nav-content .tabs .tab a {
