@@ -1,64 +1,63 @@
-const wrapper = document.querySelector('.wrapper')
+/* global data */
+const root = document.getElementById('root')
 
 // Initialize Materialize-CSS Tabs
-const tabs = M.Tabs.init(document.querySelector('.tabs'))
+M.Tabs.init(document.querySelector('.tabs'))
 
-const header_row = data.values.map(value => `<div class="col s2">${value}</div>`).join('\n')
-
-const colors = {
-  "species": "white",
-  "genus": "blue lighten-5",
-  "family": "blue lighten-4",
-  "class": "blue lighten-3",
-  "order": "blue lighten-2",
-  "phylum": "blue lighten-1",
-  "superkingdom": "blue"
-};
-
+const { ranks } = data.meta
 
 const buildTree = (data) => {
 
-  if (data.children.length === 0) {
-    return (
-      `<li class="row collection-item list-item ${colors[data.level]} leaf">
-          <div class="col s2">${data.name} - ${data.level}</div>
-          ${data.values.map(value => `<div class="col s2">${Number(value).toFixed(0)}</div>`).join('\n')}
-        </li>`
-    )
-  }
+  const isLeaf = data.children.length === 0
+  const body = isLeaf
+    ? ''
+    : `
+      <div class="collapsible-body">
+        ${data.children.map(item => buildTree(item)).join('\n')}
+      </div>
+    `
 
-  const row = data.name === 'root'
-    ? (
-        `<li class="row collection-item header-list-item blue darken-3 white-text">
-          ${data.values.map(value => 
-            `<div class="col s2">${value}</div>`
-          ).join('\n')}
-        </li>`
-      )
-    : (
-      `<li class="row collection-item list-item ${colors[data.level]} expando" data-item="${data.name}">
-          <div class="col s2">${data.name} - ${data.level}</div>
+  return `
+    <ul class="node collapsible expandable active">
+      <li class="${isLeaf ? 'leaf' : 'node'}">
+        <div class="row collapsible-header ${ranks[data.level].color} ">
+          <span class="arrow">▶</span>
+          <div class="col s2">${data.level} - ${data.name}</div>
           ${data.values.map(value => `<div class="col s2">${Number(value).toFixed(0)}</div>`).join('\n')}
-        </li>`
-      )
-      
-
-  return (
-    `<ul class="collection node">
-      ${row}
-      ${data.children.map(item => buildTree(item)).join('\n')}
-    </ul>`
-  )
+        </div>
+        ${body}
+      </li>
+    </ul>
+  `
 
 }
 
-wrapper.innerHTML = buildTree(data)
+const header = `
+  <div id="data-header" class="row blue darken-3 white-text">
+      ${data.values.map(value =>
+        `<div class="col s2">${value}</div>`
+      ).join('\n')}
+  </div>
+`
 
-Array.from(document.getElementsByClassName('expando')).forEach(li => { 
-  li.addEventListener('click', () => {
-    const lists = Array.from(li.parentElement.getElementsByTagName('UL'))
-    const leaves = Array.from(li.parentElement.getElementsByClassName('leaf'))
-    lists.concat(leaves).forEach(ul => { ul.classList.toggle('inactive') })
-  })
-})
+root.innerHTML = header + data.children.map(buildTree).join('\n')
 
+
+// const headers = Array.from(document.getElementsByClassName('collapsible-header'))
+// headers.forEach(header => {
+//   header.addEventListener('click', () => {
+//     if ([...header.parentElement.classList].includes('active')) {
+//       header.querySelector('.arrow').textContent = '▶'
+//     } else {
+//       header.querySelector('.arrow').textContent = '▼'
+//     }
+//   })
+// })
+
+const collapsibles = document.querySelectorAll('.collapsible.expandable');
+const collapseOptions = {
+  accordion: false,
+  onOpenStart: li => li.querySelector('.arrow').textContent = "▼",
+  onCloseStart: li => li.querySelector('.arrow').textContent = "▶",
+}
+const collapsible_instances = M.Collapsible.init(collapsibles, collapseOptions);

@@ -1,7 +1,18 @@
 const data = {
+	"meta": {
+		"ranks": {
+			"superkingdom": { "level": 1, "color": "blue"},
+			"phylum": { "level": 2, "color": "blue lighten-1" },
+			"order": { "level": 3, "color": "blue lighten-2" },
+			"class": { "level": 4, "color": "blue lighten-3" },
+			"family": { "level": 5, "color": "blue lighten-4" },
+			"genus": { "level": 6, "color": "blue lighten-5" },
+			"species": { "level": 7, "color": "white" },
+		}
+	},
 	"name": "root",
 	"values": [
-		"Taxa ID - Level",
+		"Level - Taxa ID",
 		"Total Support",
 		"Unique Support",
 		"Support Ratio",
