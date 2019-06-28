@@ -53,3 +53,10 @@ body, html {
 .node.inactive, .leaf.inactive {
   display: none;
 }
+
+.arrow-wrapper {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  width: 24px;
+}
