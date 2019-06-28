@@ -35,24 +35,12 @@ const buildTree = (data) => {
 const header = `
   <div id="data-header" class="row blue darken-3 white-text">
       ${data.values.map(value =>
-        `<div class="col s2">${value}</div>`
-      ).join('\n')}
+  `<div class="col s2">${value}</div>`
+).join('\n')}
   </div>
 `
 
 root.innerHTML = header + data.children.map(buildTree).join('\n')
-
-
-// const headers = Array.from(document.getElementsByClassName('collapsible-header'))
-// headers.forEach(header => {
-//   header.addEventListener('click', () => {
-//     if ([...header.parentElement.classList].includes('active')) {
-//       header.querySelector('.arrow').textContent = '▶'
-//     } else {
-//       header.querySelector('.arrow').textContent = '▼'
-//     }
-//   })
-// })
 
 const collapsibles = document.querySelectorAll('.collapsible.expandable');
 const collapseOptions = {
