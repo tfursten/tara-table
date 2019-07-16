@@ -1,1 +1,1 @@
-# Tree Table for Phylogenetic Tree
+# Tree Table for Taxonomic Tree
